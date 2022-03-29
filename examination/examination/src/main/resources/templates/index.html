@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div align="center">	
+	<div><h3 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h3>
+	</div>
+<form th:action="@{/logout}"  method="post" >
+<input type="submit"  value="Logout">
+</form>
+
+<table border="1" cellpadding="10">
+		<thead>
+			<tr>
+				<th>Teacherbean ID</th>
+				<th>Name</th>
+				<th>email</th>
+				
+				<th sec:authorize="hasRole('ADMIN')">Action</th>
+				</tr>
+				</thead>
+				
+				
+		<tbody>
+			<tr th:each="Teacherbean : ${list}">
+			<td th:text="${Teacherbean.id}">Teacherbean ID</td>
+				<td th:text="${Teacherbean.name}">Name</td>
+				<td th:text="${Teacherbean.email}">email</td>
+				<td sec:authorize="hasRole('ADMIN')">
+				<a th:href="@{'/edit/' + ${Teacherbean.id}}">Edit</a>
+				<a th:href="@{'/delete/' + ${Teacherbean.id}}">delete</a>
+				
+							</td>
+							</tr>
+							</tbody>
+							</table>
+							
+
+</body>
+</html>
